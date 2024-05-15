@@ -1,0 +1,89 @@
+    <h1>Form</h1>
+    <!-- formGrouname to match also  requuire to import import { ReactiveFormsModule } from '@angular/forms'; into app.module.ts-->
+    <form [formGroup] = "userForm" (ngSubmit) = "processUserForm()">
+
+        <div class="mb-3">
+            <div class="row mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" formControlName="firstname">
+            </div>
+            <div class="row mb-3">
+                <span class="alert alert-danger" *ngIf="userForm.get('firstname')?.errors?.['required']" >
+                    First Name is required
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('firstname')?.errors?.['minlength']" >
+                    Min. Length of First Name is 5
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('firstname')?.errors?.['maxlength']" >
+                    Max. Length of First Name is 50
+                </span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" formControlName="lastname">
+            </div>
+            <div class="row mb-3">
+                <span class="alert alert-danger" *ngIf="userForm.get('lastname')?.hasError('required')" >
+                    Last Name is required
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('lastname')?.hasError('minlength')" >
+                    Min. Length of Last Name is 5
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('lastname')?.hasError('maxlength')" >
+                    Max. Length of Last Name is 50
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('lastname')?.hasError('nonWhiteSpace')" >
+                    No white space allowed
+                </span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="row mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <!-- formControlName to match tie back to the ts -->
+                <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="row mb-3">
+                <span class="alert alert-danger" *ngIf="userForm.get('email')?.hasError('required')" >
+                    Email is mandatory
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('email')?.hasError('email')" >
+                    Email format wrong
+                </span>
+                <span class="alert alert-danger" *ngIf="userForm.get('email')?.hasError('nonWhiteSpace')" >
+                    No white space allowed
+                </span>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <td>Food Name</td>
+                </tr>
+            </thead>
+            <tbody formArrayName="foods">
+                <tr *ngFor="let food of foodArray.controls; let i = index" [formGroupName]="i">
+                    <td>
+                        <input type = "text" class = "form-control" formControlName="food">
+                    </td>
+                    <td>                        
+                        <button class="btn btn-danger" type="button" (click)="deleteFood(i)"> Delete </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class = "row mb-3">
+            <div class="col mb-3">
+                <button class="btn btn-primary" type="button" (click)="addNewFood()"> Add New Food </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+

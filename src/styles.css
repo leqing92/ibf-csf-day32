@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* import npm i bootstrap */
+/* doesn't work */
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+
+/* working */
+@import url("../node_modules/bootstrap/dist/css/bootstrap.css");
